@@ -110,8 +110,11 @@ abstract class AbstractRequest
         }
 
         curl_close($curl);
+
+        if ($statusCode != 200 && $statusCode != 201) {
+            throw new CieloRequestException($response, $statusCode);
+        }
         
-        throw new CieloRequestException($response, $statusCode);
         return $this->readResponse($statusCode, $response);
     }
 
